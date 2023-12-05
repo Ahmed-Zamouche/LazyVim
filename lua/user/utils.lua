@@ -65,9 +65,11 @@ M.os = {}
 
 function M.os.name()
   -- Unix, Linux variants
-  local fh, err = assert(io.popen("uname -o 2>/dev/null", "r"))
-  if err ~= nil and fh then
-    return fh:read()
+  local fh = io.popen("uname -o 2>/dev/null", "r")
+  if fh ~= nil then
+    local name fh:read()
+    io.close(fh)
+    return name
   end
   return "Windows"
 end
