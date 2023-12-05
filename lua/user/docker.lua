@@ -1,5 +1,5 @@
 json = require("thirdparty.json.json")
-utils = require("lua.user.utils")
+utils = require("user.utils")
 
 local M = {}
 
