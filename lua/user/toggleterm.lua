@@ -148,7 +148,7 @@ end
 local lua = nil
 function TermToggleLua()
   if lua == nil then
-    lua = Terminal:new({ id = next_id(), display_name = "Lua", cmd = "lua54", hidden = true })
+    lua = Terminal:new({ id = next_id(), display_name = "Lua", cmd = "lua", hidden = true })
   end
   lua:toggle()
 end
