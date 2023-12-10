@@ -2,3 +2,4 @@
 require("config.lazy")
 require("user.toggleterm")
 require("user.csearchpath")
+require("user.weather")
