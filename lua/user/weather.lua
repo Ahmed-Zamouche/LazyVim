@@ -30,11 +30,17 @@ function M.async_request(args)
 
   M.data = nil
   args = args or {}
-  args.city = args.city or "Stockholm"
-  M.city = args.city
+  M.city = args.city or "Stockholm"
+  M.lat = args.lat or nil
+  M.lon = args.lon or nil
 
-  ---@diagnostic disable-next-line: lowercase-global
-  handle, pid = uv.spawn("curl", {
+  if M.lat ~= nil and M.lon ~= nil then
+    M.city = nil
+  end
+  M.units = args.units or "metric"
+  M.lang = args.lang or "en"
+
+  local options = {
     args = {
       "--silent",
       "--get",
@@ -42,14 +48,26 @@ function M.async_request(args)
       "Accept: application/json",
       "http://api.openweathermap.org/data/2.5/weather",
       "--data-urlencode",
-      string.format("q=%s", M.city),
+      string.format("lang=%s", M.lang),
       "--data-urlencode",
-      "units=metric", --
+      string.format("units=%s", M.units),
       "--data-urlencode",
       string.format("appid=%s", M.API_KEY),
     },
     stdio = { nil, stdout, nil },
-  }, function()
+  }
+  if M.city ~= nil then
+    table.insert(options.args, "--data-urlencode")
+    table.insert(options.args, string.format("q=%s", M.city))
+  else
+    table.insert(options.args, "--data-urlencode")
+    table.insert(options.args, string.format("lat=%s", M.lat))
+    table.insert(options.args, "--data-urlencode")
+    table.insert(options.args, string.format("lon=%s", M.lon))
+  end
+
+  ---@diagnostic disable-next-line: lowercase-global
+  handle, pid = uv.spawn("curl", options, function()
     stdout:read_stop()
     stdout:close()
     handle:close()
@@ -103,7 +121,7 @@ function M.description()
   end
 end
 function M.summary()
-  return string.format("%s°C🌡️%s%%💧%s", tostring(M.temp()), tostring(M.humidity()), M.icon())
+  return string.format("%s°C🌡️%s%%💧%s󠀥", tostring(M.temp()), tostring(M.humidity()), M.icon())
 end
 
 function math.round(num, decimals)
