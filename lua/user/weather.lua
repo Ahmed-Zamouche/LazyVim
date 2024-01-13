@@ -121,7 +121,7 @@ function M.description()
   end
 end
 function M.summary()
-  return string.format("%s°C🌡️%s%%💧%s󠀥", tostring(M.temp()), tostring(M.humidity()), M.icon())
+  return string.format("%s°C🌡️%s%%💧%s", tostring(M.temp()), tostring(M.humidity()), M.icon())
 end
 
 function math.round(num, decimals)
