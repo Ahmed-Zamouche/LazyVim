@@ -64,19 +64,11 @@ end
 M.os = {}
 
 function M.os.name()
-  -- Unix, Linux variants
-  local fh = io.popen("uname -o 2>/dev/null", "r")
-
-  if fh ~= nil then
-    local name = fh:read()
-    io.close(fh)
-    return name
-  end
-  return "Windows"
+  return vim.loop.os_uname().sysname
 end
 
 function M.os.home()
-  if M.os.name() == "Windows" then
+  if M.os.name() == "Windows_NT" then
     return os.getenv("UserProfile")
   elseif M.contains({ "Linux", "GNU/Linux", "Darwin" }, M.os.name()) then
     return os.getenv("HOME")
