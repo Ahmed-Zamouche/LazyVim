@@ -47,7 +47,7 @@ local Terminal = require("toggleterm.terminal").Terminal
 
 local ids = 0
 local function next_id()
-  id = ids
+  local id = ids
   ids = ids + 1
   return id
 end
@@ -169,12 +169,23 @@ function TermTogglePython()
   python:toggle()
 end
 
-local htop = nil
-function _HTOP_TOGGLE()
-  if htop == nil then
-    htop = Terminal:new({ id = next_id(), display_name = "htop", cmd = "htop", hidden = true })
+local serial = nil
+function TermToggeleSerial(device, baudrate)
+  local d = device or "/dev/ttyUSB0"
+  local b = baudrate or 115200
+  local cmd = "picocom -rl -b " .. b .. " " .. d
+  if serial == nil then
+    serial = Terminal:new({ id = next_id(), display_name = "serial", cmd = cmd, hidden = true })
   end
-  htop:toggle()
+  serial:toggle()
+end
+
+local top = nil
+function TermToggeleTop()
+  if top == nil then
+    top = Terminal:new({ id = next_id(), display_name = "top", cmd = "btop", hidden = true })
+  end
+  top:toggle()
 end
 
 local ssh_hosts = { items = get_ssh_hosts(), selected = nil }
@@ -182,7 +193,7 @@ function TermSelectSsh()
   vim.ui.select(utils.get_keys(ssh_hosts.items), {
     prompt = "Select a host:",
   }, function(choice)
-    host = ssh_hosts.items[choice]
+    local host = ssh_hosts.items[choice]
     if host ~= nil then
       if host.term == nil then
         host.term = Terminal:new({
@@ -211,7 +222,7 @@ function TermSelectContainer()
   vim.ui.select(utils.get_keys(containers.items), {
     prompt = "Select a container:",
   }, function(choice)
-    container = containers.items[choice]
+    local container = containers.items[choice]
     if container ~= nil then
       if container.term == nil then
         container.term = Terminal:new({
