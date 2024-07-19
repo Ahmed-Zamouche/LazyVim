@@ -15,7 +15,7 @@ function M.container(args)
     local lst = {}
     for line in proc:lines() do
       local t = json.decode(line)
-      lst[t.Image] = t
+      lst[t.ID] = t
     end
     return true, lst
   end
