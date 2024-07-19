@@ -219,10 +219,20 @@ end
 
 local containers = { items = get_containers(), selected = nil }
 function TermSelectContainer()
-  vim.ui.select(utils.get_keys(containers.items), {
+  local names = {}
+  for _, v in pairs(containers.items) do
+    table.insert(names, v.Names)
+  end
+  vim.ui.select(names, {
     prompt = "Select a container:",
   }, function(choice)
-    local container = containers.items[choice]
+    local container = nil
+    for _, v in pairs(containers.items) do
+      if v.Names == choice then
+        container = v
+      end
+    end
+
     if container ~= nil then
       if container.term == nil then
         container.term = Terminal:new({
