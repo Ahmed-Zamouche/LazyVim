@@ -1,4 +1,5 @@
 local json = require("thirdparty.json.json")
+local utils = require("user.utils")
 
 local M = {
   -- Global constant for the OpenWeatherMap API key
@@ -46,7 +47,7 @@ function M.async_request(args)
       "--get",
       "--header",
       "Accept: application/json",
-      "http://api.openweathermap.org/data/2.5/weather",
+      "https://api.openweathermap.org/data/2.5/weather",
       "--data-urlencode",
       string.format("lang=%s", M.lang),
       "--data-urlencode",
