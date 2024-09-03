@@ -15,14 +15,14 @@ return {
       -- float bash
       { "<leader>tf", "<cmd>lua TermToggleShell('float')<cr>", desc = "Shell" },
       {
-        "<a-3>",
+        "<a-2>",
         mode = { "n", "v", "t" },
         "<cmd> lua TermToggleShell('float')<cr>",
         desc = "Shell",
       },
       -- containers
       { "<leader>tc", "<cmd>lua TermToggleContainer('float')<cr>", desc = "Container" },
-      { "<a-2>", mode = { "n", "x", "o", "t" }, "<cmd>lua TermToggleContainer('float')<cr>", desc = "Container" },
+      { "<a-3>", mode = { "n", "x", "o", "t" }, "<cmd>lua TermToggleContainer('float')<cr>", desc = "Container" },
       -- ssh
       { "<leader>ts", "<cmd>lua TermToggleSsh('float')<cr>", desc = "ssh" },
       { "<a-4>", mode = { "n", "x", "o", "t" }, "<cmd>lua TermToggleSsh('float')<cr>", desc = "ssh" },
@@ -35,6 +35,14 @@ return {
       -- lua
       { "<leader>tl", "<cmd>lua TermToggleLua('float')<cr>", desc = "Lua" },
       { "<a-7>", mode = { "n", "x", "o", "t" }, "<cmd>lua TermToggleLua('float')<cr>", desc = "Lua" },
+      -- serial
+      { "<leader>tm", "<cmd>lua TermToggleSerial('/dev/ttyUSB0', 115200)<cr>", desc = "Serial" },
+      {
+        "<a-8>",
+        mode = { "n", "x", "o", "t" },
+        "<cmd>lua TermToggleSerial('/dev/ttyUSB0', 115200)<cr>",
+        desc = "Serial",
+      },
       --
     },
   },

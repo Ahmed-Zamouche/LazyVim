@@ -170,10 +170,10 @@ function TermTogglePython()
 end
 
 local serial = nil
-function TermToggeleSerial(device, baudrate)
+function TermToggleSerial(device, baudrate)
   local d = device or "/dev/ttyUSB0"
   local b = baudrate or 115200
-  local cmd = "picocom -rl -b " .. b .. " " .. d
+  local cmd = "minicom -con" .. " " .. "-b" .. b .. " " .. "-D" .. d
   if serial == nil then
     serial = Terminal:new({ id = next_id(), display_name = "serial", cmd = cmd, hidden = true })
   end
